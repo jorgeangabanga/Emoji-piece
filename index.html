@@ -3402,41 +3402,19 @@ function enemyTurn() {
 }
 
 function applyEnemyBurn() {
+  if (!battleActive || !currentEnemy) return false;
+
   let enemyDied = false;
   enemyStatusEffects = enemyStatusEffects.filter(e => {
-
     if (enemyDied) return false;
-    if (e.type === 'burn') {
-      currentEnemy.hp = Math.max(0, currentEnemy.hp - e.value);
-      addLog(`<span class="log-fruit">🔥 Queimadura: ${e.value} dano!</span>`);
-      updateBattleBars();
-      e.turnsLeft--;
-      if (currentEnemy.hp <= 0) {
-        enemyDied = true;
-        battleActive = false;
-        setTimeout(() => victoryBattle(), 300);
-        return false;
-      }
-      return e.turnsLeft > 0;
-    }
-    if (e.type === 'bleed') {
+
+    if (e.type === 'burn' || e.type === 'bleed' || e.type === 'poison') {
       if (enemyDied) return false;
+      const icon = e.type === 'burn' ? '🔥' : e.type === 'bleed' ? '🩸' : '☠';
+      const label = e.type === 'burn' ? 'Queimadura' : e.type === 'bleed' ? 'Sangramento' : 'Veneno';
+      const cls = e.type === 'poison' ? 'log-player' : 'log-fruit';
       currentEnemy.hp = Math.max(0, currentEnemy.hp - e.value);
-      addLog(`<span class="log-fruit">🩸 Sangramento: ${e.value} dano!</span>`);
-      updateBattleBars();
-      e.turnsLeft--;
-      if (currentEnemy.hp <= 0) {
-        enemyDied = true;
-        battleActive = false;
-        setTimeout(() => victoryBattle(), 300);
-        return false;
-      }
-      return e.turnsLeft > 0;
-    }
-    if (e.type === 'poison') {
-      if (enemyDied) return false;
-      currentEnemy.hp = Math.max(0, currentEnemy.hp - e.value);
-      addLog(`<span class="log-player">☠ Veneno: ${e.value} dano!</span>`);
+      addLog(`<span class="${cls}">${icon} ${label}: ${e.value} dano!</span>`);
       updateBattleBars();
       e.turnsLeft--;
       if (currentEnemy.hp <= 0) {
@@ -3450,10 +3428,7 @@ function applyEnemyBurn() {
     return true;
   });
 
-  // After filter, if enemy died ensure buttons are not re-enabled
-  if (enemyDied) return true;
-
-  return false;
+  return enemyDied;
 }
 
 function useItemInBattle() {

@@ -5010,10 +5010,10 @@ function renderTradeModal() {
   if (!tradeTarget) return;
   const modal = document.getElementById('trade-modal');
 
-  // Weapons: only ones with level > 0 (acquired)
-  const myWeapons = Object.entries(weapons).filter(([id, w]) => w.level > 0);
-  // Accessories: owned
-  const myAccs = Object.entries(ownedAccessories).filter(([id, owned]) => owned);
+  // Weapons: only ones the player actually owns
+  const myWeapons = Object.entries(weapons).filter(([id, w]) => w.owned === true);
+  // Accessories: only truly owned (value strictly true)
+  const myAccs = Object.entries(ownedAccessories).filter(([id, owned]) => owned === true);
   const hasFruit = !!player.devilFruit;
 
   const weaponsHtml = myWeapons.length === 0 ? '<div style="color:var(--text-light);font-size:12px">Nenhuma arma</div>' :
@@ -5070,7 +5070,7 @@ async function sendTradeOffer() {
   try {
     await crewFetch(`/crew/${crewState.id}/trade/offer`, 'POST', { fromId: getPlayerId(), toId: tradeTarget.id, offer });
     // Remove items from sender immediately (optimistic)
-    offer.weapons.forEach(w => { if (weapons[w.id]) weapons[w.id].level = 0; });
+    offer.weapons.forEach(w => { if (weapons[w.id]) { weapons[w.id].owned = false; weapons[w.id].level = 1; } });
     offer.accessories.forEach(a => { delete ownedAccessories[a.id]; });
     if (offer.fruit) player.devilFruit = null;
     closeTradeModal();
@@ -5079,7 +5079,12 @@ async function sendTradeOffer() {
 }
 
 function applyReceivedTrade(offer) {
-  offer.weapons?.forEach(w => { if (weapons[w.id]) weapons[w.id].level = Math.max(weapons[w.id].level, w.level || 1); });
+  offer.weapons?.forEach(w => {
+    if (weapons[w.id]) {
+      weapons[w.id].owned = true;
+      weapons[w.id].level = Math.max(weapons[w.id].level, w.level || 1);
+    }
+  });
   offer.accessories?.forEach(a => { if (a.id) ownedAccessories[a.id] = true; });
   if (offer.fruit?.id && !player.devilFruit) player.devilFruit = offer.fruit.id;
 }

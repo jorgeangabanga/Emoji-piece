@@ -3552,8 +3552,8 @@ function useItemInBattle() {
 }
 
 function victoryBattle() {
-  if (!battleActive) return;
-  battleActive = false;
+  if (battleActive) battleActive = false;
+  else if (currentEnemy && currentEnemy.hp > 0) return; // só bloqueia se inimigo ainda vivo
   totalWins++;
 
   const xpGain = Math.floor(currentEnemy.xp * (isBossBattle ? 1 : 1.8));

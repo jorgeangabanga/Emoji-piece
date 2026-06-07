@@ -1060,7 +1060,7 @@ body.pc-mode #status-bar { display: none; }
     <div class="ability-picker-title">⚔ Habilidades</div>
     <div class="ability-picker-sub">ESCOLHA SUA TÉCNICA</div>
     <div id="ability-list"></div>
-    <button class="ability-cancel-btn" onclick="closeAbilityPicker()">✕ CANCELAR</button>
+    <button class="ability-cancel-btn" onclick="closeAbilityPicker(true)">✕ CANCELAR</button>
   </div>
 </div>
 
@@ -3483,7 +3483,8 @@ function enemyTurn() {
   }
 
   const accBonus = getAccessoryBonuses();
-  const finalDmg = Math.max(1, dmg - Math.floor((player.def + accBonus.def) * 0.5));
+  const effectiveDef = player.def + Math.floor(accBonus.def * 0.3);
+  const finalDmg = Math.max(Math.floor(dmg * 0.1), dmg - effectiveDef);
   player.hp = Math.max(0, player.hp - finalDmg);
   gainHakiObservacaoXP('damage');
   addLog(`<span class="log-enemy">💢 ${currentEnemy.name} atacou causando ${finalDmg} de dano!</span>`);
@@ -4211,10 +4212,12 @@ function openAbilityPicker(context) {
 
   if (player.specialCooldown > 0) {
     showNotification('⏳ Especial em recarga (' + player.specialCooldown + ' turnos)!');
-    if (ctx === 'raid') setRaidBtnsEnabled(true);
-    else setBattleButtons(true);
     return;
   }
+
+  // Disable buttons while picker is open
+  if (ctx === 'battle') setBattleButtons(false);
+  else setRaidBtnsEnabled(false);
 
   const w = weapons[player.equippedWeapon];
   const list = document.getElementById('ability-list');
@@ -4266,10 +4269,12 @@ function openAbilityPicker(context) {
   document.getElementById('ability-picker').classList.add('show');
 }
 
-function closeAbilityPicker() {
+function closeAbilityPicker(cancelled) {
   document.getElementById('ability-picker').classList.remove('show');
-  if (battleActive) setBattleButtons(true);
-  // Note: raid buttons are re-enabled by raidAction/raidUseWeaponAbility themselves
+  if (cancelled) {
+    if (battleActive) setBattleButtons(true);
+    if (raidState.waveActive) setRaidBtnsEnabled(true);
+  }
 }
 
 function useWeaponAbility(fn, abilityName) {
@@ -5870,8 +5875,8 @@ function raidEnemyTurn() {
   }
 
   const accBonus = getAccessoryBonuses();
-  const def = Math.floor((player.def + accBonus.def) * 0.5); // mesma lógica da batalha normal (50% da DEF)
-  let enemyDmg = Math.max(Math.floor(enemy.atk * 0.1), enemy.atk + Math.floor(Math.random() * 12) - def); // mínimo 10% do ATK do inimigo
+  const effectiveDefRaid = player.def + Math.floor(accBonus.def * 0.3);
+  let enemyDmg = Math.max(Math.floor(enemy.atk * 0.1), enemy.atk + Math.floor(Math.random() * 12) - effectiveDefRaid);
 
   // Fruit passives
   if (player.devilFruit === 'numa') enemyDmg = Math.floor(enemyDmg * 0.7);

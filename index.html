@@ -2398,7 +2398,7 @@ function startGame() {
 
     init();
     showScreen('world');
-
+    startCrewPing();
     setTimeout(() => showNotification(`⚓ Bem-vindo, ${name}! Sua aventura começa!`), 100);
   } catch(e) {
     alert('Erro: ' + e.message);
@@ -4670,6 +4670,7 @@ function loadGame() {
     showScreen('world');
     updateSaveTimestamp();
     showNotification('📂 Save carregado! Bem-vindo de volta, ' + player.name + '!');
+    startCrewPing();
   } catch(e) {
     showNotification('❌ Erro ao carregar save: ' + e.message);
   }
@@ -4976,11 +4977,22 @@ function copyInviteCode() {
   navigator.clipboard.writeText(crewState.inviteCode).then(() => showNotification('📋 Código copiado!'));
 }
 
+// ── Keep-alive ping ──────────────────────────────────────────────
+let crewPingInterval = null;
+
+function startCrewPing() {
+  if (crewPingInterval) return;
+  crewPingInterval = setInterval(() => {
+    fetch(CREW_SERVER + '/ping').catch(() => {});
+  }, 5 * 60 * 1000); // a cada 5 minutos
+}
+
 function sendCrewChat() {
   const input = document.getElementById('crew-chat-input');
   const text = input?.value?.trim();
   if (!text || !crewState || !crewSocket) return;
   crewSocket.emit('crew_chat', { crewId: crewState.id, playerId: getPlayerId(), playerName: player.name || 'Desconhecido', text });
+  fetch(CREW_SERVER + '/ping').catch(() => {}); // ping ao enviar mensagem
   input.value = '';
 }
 

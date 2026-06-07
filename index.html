@@ -5193,6 +5193,7 @@ function deleteSave() {
     totalWins = 0;
     Object.keys(killCounts).forEach(k => delete killCounts[k]);
     missions.forEach(m => { m.completed = false; m.progress = 0; });
+    crewData = null;
     selectedClass = null;
     selectedEmoji = '🏴‍☠️';
     document.getElementById('cc-name').value = '';

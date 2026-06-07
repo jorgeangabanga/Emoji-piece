@@ -5021,6 +5021,7 @@ function saveGame() {
   };
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+    if (typeof _saveGameExtras === 'function') _saveGameExtras();
     showNotification('💾 Jogo salvo!');
     updateSaveTimestamp();
   } catch(e) {
@@ -5093,6 +5094,7 @@ function loadGame() {
     init();
     showScreen('world');
     updateSaveTimestamp();
+    if (typeof _loadGameExtras === 'function') _loadGameExtras();
     showNotification('📂 Save carregado! Bem-vindo de volta, ' + player.name + '!');
   } catch(e) {
     showNotification('❌ Erro ao carregar save: ' + e.message);
@@ -5308,6 +5310,7 @@ function renderCrew() {
       <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
         <button class="npc-btn npc-btn-equip" style="padding:7px 16px;font-size:10px" onclick="openCrewSetup('crew')">✏️ Editar Tripulação</button>
         <button class="npc-btn" style="border-color:#27ae60;color:#27ae60;padding:7px 16px;font-size:10px" onclick="reviveAllNpcs()">⚕ Ressuscitar Todos</button>
+        <button class="npc-btn" style="border-color:#2980b9;color:#2980b9;padding:7px 16px;font-size:10px" onclick="healAllNpcs()">💊 Curar Todos <span style="color:var(--gold)">(-200 💰)</span></button>
       </div>
     </div>
     ${!hasMin ? `<div class="crew-min-warn">⚠️ Você precisa de pelo menos <strong>${MIN_NPC_ACTIVE} tripulantes ativos</strong> para participar de Raids e Bosses com suporte de tripulação! Recrute mais membros ou reviva os caídos.</div>` : ''}
@@ -5351,6 +5354,7 @@ function renderCrew() {
       <div class="npc-gear">⚔ Arma: <span>${weaponName}</span><br>🍇 Fruta: <span>${fruitName}</span></div>
       <div class="npc-actions">
         <button class="npc-btn npc-btn-equip" onclick="openNpcEquip('${npc.id}')">🎒 Equipar</button>
+        ${npc.alive && npc.hp < npc.maxHp ? `<button class="npc-btn" style="border-color:#2980b9;color:#2980b9" onclick="healNpc('${npc.id}')">💊 Curar</button>` : ''}
         ${!npc.alive ? `<button class="npc-btn npc-btn-revive" onclick="reviveNpc('${npc.id}')">⚕ Reviver</button>` : ''}
         <button class="npc-btn npc-btn-dismiss" onclick="dismissNpc('${npc.id}')">🚪 Dispensar</button>
       </div>`;
@@ -5506,6 +5510,35 @@ function reviveAllNpcs() {
     dead.forEach(npc => { npc.alive = true; npc.hp = Math.floor(npc.maxHp * 0.5); });
     updateStatusBar(); renderCrew();
     showNotification(`⚕ Tripulação ressuscitada!`);
+    try { autoSave(); } catch(e) {}
+  });
+}
+
+function healNpc(id) {
+  if (!crewData) return;
+  const npc = crewData.members.find(m => m.id === id);
+  if (!npc || !npc.alive) return;
+  if (npc.hp >= npc.maxHp) { showNotification(`✅ ${npc.name} já está com HP máximo!`); return; }
+  if (player.berry < 200) { showNotification('❌ Precisa de 200 berries para curar!'); return; }
+  showConfirm(`Curar <strong>${npc.name}</strong> para HP máximo por <strong>200 berries</strong>?`, () => {
+    player.berry -= 200;
+    npc.hp = npc.maxHp;
+    updateStatusBar(); renderCrew();
+    showNotification(`💊 ${npc.name} foi totalmente curado!`);
+    try { autoSave(); } catch(e) {}
+  });
+}
+
+function healAllNpcs() {
+  if (!crewData) return;
+  const needHeal = crewData.members.filter(m => m.alive && m.hp < m.maxHp);
+  if (needHeal.length === 0) { showNotification('✅ Todos os tripulantes já estão com HP máximo!'); return; }
+  if (player.berry < 200) { showNotification('❌ Precisa de 200 berries para curar a tripulação!'); return; }
+  showConfirm(`Curar <strong>${needHeal.length} tripulante(s)</strong> para HP máximo por <strong>200 berries</strong>?`, () => {
+    player.berry -= 200;
+    needHeal.forEach(npc => { npc.hp = npc.maxHp; });
+    updateStatusBar(); renderCrew();
+    showNotification(`💊 Tripulação curada! (${needHeal.length} membros)`);
     try { autoSave(); } catch(e) {}
   });
 }
@@ -6571,10 +6604,8 @@ function abandonRaid() {
   };
 })();
 
-// Hook saveGame to save raid cooldowns
-const _origSaveGame = saveGame;
-function saveGame() {
-  _origSaveGame();
+// Extra save/load logic for raid cooldowns and gura awakening
+function _saveGameExtras() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return;
@@ -6585,10 +6616,7 @@ function saveGame() {
   } catch(e) {}
 }
 
-// Hook loadGame to load raid cooldowns
-const _origLoadGame = loadGame;
-function loadGame() {
-  _origLoadGame();
+function _loadGameExtras() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return;

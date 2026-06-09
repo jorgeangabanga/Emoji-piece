@@ -1312,7 +1312,7 @@ const classData = {
     hpPerLevel: 15,
     atkPerLevel: 4,
     spdPerLevel: 2,
-    allowedWeapons: ['fists', 'dagger', 'katana', 'scythe', 'trident', 'dual_blades', 'sea_king_lance', 'thunder_sword', 'yoru', 'wado_ichimonji', 'kamusari', 'naginata_wb'],
+    allowedWeapons: ['fists', 'dagger', 'katana', 'scythe', 'trident', 'dual_blades', 'sea_king_lance', 'thunder_sword', 'yoru', 'wado_ichimonji', 'kamusari', 'naginata_wb', 'obsidian_blade', 'wind_blade', 'sea_serpent_sword', 'celestial_edge', 'enma'],
   },
   gunner: {
     name: 'Atirador',
@@ -1326,7 +1326,7 @@ const classData = {
     hpPerLevel: 20,
     atkPerLevel: 3,
     spdPerLevel: 2,
-    allowedWeapons: ['fists', 'slingshot', 'pistol', 'musket', 'cannon', 'eternal_pose_rifle', 'sea_prism_cannon'],
+    allowedWeapons: ['fists', 'slingshot', 'pistol', 'musket', 'cannon', 'eternal_pose_rifle', 'sea_prism_cannon', 'flintlock', 'bazooka', 'tri_cannon', 'electromagnetic_rifle', 'pluton_cannon'],
   },
   fighter: {
     name: 'Lutador',
@@ -1340,7 +1340,7 @@ const classData = {
     hpPerLevel: 28,
     atkPerLevel: 5,
     spdPerLevel: 1,
-    allowedWeapons: ['fists', 'kicks', 'gauntlet', 'nunchaku', 'staff', 'iron_knuckles', 'armored_fists', 'bone_staff', 'war_hammer', 'conqueror_staff'],
+    allowedWeapons: ['fists', 'kicks', 'gauntlet', 'nunchaku', 'staff', 'iron_knuckles', 'armored_fists', 'bone_staff', 'war_hammer', 'conqueror_staff', 'brass_knuckles', 'steel_boots', 'chain_whip', 'titan_fist', 'divine_staff'],
   },
 };
 
@@ -1672,6 +1672,217 @@ const weaponData = {
       3: { name: 'Flecha de Fogo', desc: 'Flecha incendiária — 3x ATK + queimadura por 3 turnos', fn: 'fireArrow' },
     }
   },
+  // === NOVAS ARMAS v12 ===
+  soul_blade: {
+    id: 'soul_blade', name: 'Lâmina das Almas', emoji: '🌙', class: 'swordsman',
+    baseDmg: 62, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 26000,
+    abilities: {
+      1: null,
+      2: { name: 'Corte Espectral', desc: 'Lâmina imbuída com almas — 4x ATK ignorando toda defesa + drena 15% HP', fn: 'spectralCut' },
+      3: { name: 'Tempestade de Almas', desc: 'Libera almas aprisionadas — 7x ATK devastador que atravessa qualquer escudo', fn: 'soulStorm' },
+    }
+  },
+  thunder_knuckle: {
+    id: 'thunder_knuckle', name: 'Punho do Trovão', emoji: '⚡', class: 'fighter',
+    baseDmg: 48, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 17000,
+    abilities: {
+      1: null,
+      2: { name: 'Golpe Elétrico', desc: 'Soco carregado de eletricidade — 3.5x ATK + paralisa por 1 turno', fn: 'electricStrike' },
+      3: { name: 'Descarga Total', desc: 'Libera toda energia acumulada — 6x ATK + atordoa 2 turnos + dano em área', fn: 'fullDischarge' },
+    }
+  },
+  ancient_rifle: {
+    id: 'ancient_rifle', name: 'Rifle Ancestral', emoji: '🔭', class: 'gunner',
+    baseDmg: 58, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 23000,
+    abilities: {
+      1: null,
+      2: { name: 'Bala Perfurante', desc: 'Projétil ancestral de alta penetração — 4x ATK, ignora 70% da defesa', fn: 'piercingRound' },
+      3: { name: 'Rajada Devastadora', desc: 'Dispara 3 balas explosivas em sequência — total 7x ATK', fn: 'devastatingBurst' },
+    }
+  },
+  dragon_claw: {
+    id: 'dragon_claw', name: 'Garra do Dragão', emoji: '🐉', class: 'fighter',
+    baseDmg: 72, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 32000,
+    bossOnly: true,
+    abilities: {
+      1: null,
+      2: { name: 'Rasgo Dracônico', desc: 'Rasga o inimigo com garras de dragão — 5x ATK + sangramento pesado por 4 turnos', fn: 'dragonRend' },
+      3: { name: 'Fúria do Dragão', desc: 'Poder máximo do dragão — 8x ATK, ignora toda defesa e queimadura massiva', fn: 'dragonFury' },
+    }
+  },
+  phantom_scythe: {
+    id: 'phantom_scythe', name: 'Foice Fantasma', emoji: '👻', class: 'swordsman',
+    baseDmg: 50, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 19000,
+    abilities: {
+      1: null,
+      2: { name: 'Ceifa Espectral', desc: 'Golpe invisível que corta a própria vida — 4x ATK + drena HP', fn: 'spectralReap' },
+      3: { name: 'Dança da Morte', desc: 'Série de cortes fantasmagóricos — 5 hits de 1.5x ATK cada, ignora defesa', fn: 'deathDance' },
+    }
+  },
+
+  // ── SWORDSMAN ──────────────────────────────────────────────────────────
+  obsidian_blade: {
+    id: 'obsidian_blade', name: 'Lâmina de Obsidiana', emoji: '🗡️', class: 'swordsman',
+    baseDmg: 14, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 2800,
+    abilities: {
+      1: null,
+      2: { name: 'Corte Afiado', desc: 'Lâmina ultra-afiada — 2.2x ATK ignorando 25% da defesa', fn: 'sharpCut' },
+      3: { name: 'Explosão de Obsidiana', desc: 'A lâmina estilhaça no impacto — 4x ATK + sangramento pesado', fn: 'obsidianBurst' },
+    }
+  },
+  wind_blade: {
+    id: 'wind_blade', name: 'Espada do Vento', emoji: '💨', class: 'swordsman',
+    baseDmg: 20, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 5000,
+    abilities: {
+      1: null,
+      2: { name: 'Rajada Cortante', desc: 'Projétil de vento — ataque à distância 2.5x ATK', fn: 'windBlade' },
+      3: { name: 'Tempestade de Gume', desc: 'Dezenas de projéteis de vento — 6 hits de 1.2x ATK cada', fn: 'bladeStorm' },
+    }
+  },
+  sea_serpent_sword: {
+    id: 'sea_serpent_sword', name: 'Espada da Serpente do Mar', emoji: '🐍', class: 'swordsman',
+    baseDmg: 38, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 13500,
+    abilities: {
+      1: null,
+      2: { name: 'Mordida da Serpente', desc: 'Corte sinuoso e venenoso — 3x ATK + veneno por 4 turnos', fn: 'serpentBite' },
+      3: { name: 'Enrolamento Fatal', desc: 'Envolve o inimigo e aperta — 5.5x ATK + imobiliza 2 turnos', fn: 'serpentCoil' },
+    }
+  },
+  celestial_edge: {
+    id: 'celestial_edge', name: 'Lâmina Celestial', emoji: '🌟', class: 'swordsman',
+    baseDmg: 56, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 24000,
+    abilities: {
+      1: null,
+      2: { name: 'Corte Estelar', desc: 'Raio de luz pura — 4.5x ATK, cega o inimigo por 1 turno', fn: 'starCut' },
+      3: { name: 'Julgamento Divino', desc: 'O poder dos Celestiais — 9x ATK, ignora toda defesa e atordoa', fn: 'divineJudgement' },
+    }
+  },
+  enma: {
+    id: 'enma', name: 'Enma', emoji: '⚫', class: 'swordsman',
+    baseDmg: 80, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 38000,
+    bossOnly: true,
+    abilities: {
+      1: null,
+      2: { name: 'Dreno de Haki', desc: 'Enma drena o Haki do usuário — 5x ATK com corte que atravessa dimensões', fn: 'enmaSlash' },
+      3: { name: 'King of Hell', desc: 'Golpe supremo do Rei do Inferno — 10x ATK, penetra qualquer defesa', fn: 'kingOfHell' },
+    }
+  },
+
+  // ── GUNNER ─────────────────────────────────────────────────────────────
+  flintlock: {
+    id: 'flintlock', name: 'Pistola Flintlock', emoji: '🔫', class: 'gunner',
+    baseDmg: 7, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 1500,
+    abilities: {
+      1: null,
+      2: { name: 'Disparo Duplo', desc: 'Dois disparos rápidos — 2 hits de 1.3x ATK cada', fn: 'doubleShot' },
+      3: { name: 'Bala Perfurante', desc: 'Bala que atravessa a armadura — 3.2x ATK ignorando 60% da defesa', fn: 'piercingBullet' },
+    }
+  },
+  bazooka: {
+    id: 'bazooka', name: 'Bazuca', emoji: '💥', class: 'gunner',
+    baseDmg: 28, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 8500,
+    abilities: {
+      1: null,
+      2: { name: 'Foguete Direto', desc: 'Projétil explosivo — 3.5x ATK + queimadura 2 turnos', fn: 'rocketShot' },
+      3: { name: 'Saraivada de Foguetes', desc: 'Lança 4 foguetes em sequência — total 6x ATK', fn: 'rocketBarrage' },
+    }
+  },
+  tri_cannon: {
+    id: 'tri_cannon', name: 'Canhão Triplo', emoji: '🎯', class: 'gunner',
+    baseDmg: 42, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 15000,
+    abilities: {
+      1: null,
+      2: { name: 'Salva Tripla', desc: 'Três canhões disparam ao mesmo tempo — 3 hits de 1.8x ATK', fn: 'tripleBarrel' },
+      3: { name: 'Tempestade de Fogo', desc: 'Fogo contínuo de todos os canos — 7x ATK total + queimadura pesada', fn: 'fireStorm' },
+    }
+  },
+  electromagnetic_rifle: {
+    id: 'electromagnetic_rifle', name: 'Rifle Eletromagnético', emoji: '⚡', class: 'gunner',
+    baseDmg: 52, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 20000,
+    abilities: {
+      1: null,
+      2: { name: 'Disparo Magnético', desc: 'Projétil acelerado eletromagneticamente — 4x ATK + paralisa 1 turno', fn: 'magneticShot' },
+      3: { name: 'Pulso EMP', desc: 'Pulso eletromagnético devastador — 7x ATK, anula habilidades do inimigo por 2 turnos', fn: 'empBlast' },
+    }
+  },
+  pluton_cannon: {
+    id: 'pluton_cannon', name: 'Canhão de Pluton', emoji: '☢️', class: 'gunner',
+    baseDmg: 95, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 45000,
+    bossOnly: true,
+    abilities: {
+      1: null,
+      2: { name: 'Disparo Ancestral', desc: 'Poder da Arma Ancestral — 6x ATK, ignora toda defesa do inimigo', fn: 'ancientShot' },
+      3: { name: 'Aniquilação Total', desc: 'O canhão lendário dispara a plena força — 12x ATK, devastação absoluta', fn: 'totalAnnihilation' },
+    }
+  },
+
+  // ── FIGHTER ────────────────────────────────────────────────────────────
+  brass_knuckles: {
+    id: 'brass_knuckles', name: 'Soco Inglês', emoji: '🤛', class: 'fighter',
+    baseDmg: 5, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 1000,
+    abilities: {
+      1: null,
+      2: { name: 'Jab Rápido', desc: 'Série de socos velozes — 3 hits de 0.9x ATK', fn: 'rapidJab' },
+      3: { name: 'Uppercut Explosivo', desc: 'Soco ascendente devastador — 3x ATK + atordoa 1 turno', fn: 'explosiveUppercut' },
+    }
+  },
+  steel_boots: {
+    id: 'steel_boots', name: 'Botas de Aço', emoji: '🥾', class: 'fighter',
+    baseDmg: 15, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 3800,
+    abilities: {
+      1: null,
+      2: { name: 'Chute Giratório', desc: 'Giro com chute pesado — 2.5x ATK + reduz SPD do inimigo', fn: 'spinKick' },
+      3: { name: 'Pisão da Terra', desc: 'Impacto no chão que gera onda sísmica — 4.5x ATK + atordoa todos por 1 turno', fn: 'groundStomp' },
+    }
+  },
+  chain_whip: {
+    id: 'chain_whip', name: 'Chicote de Correntes', emoji: '⛓️', class: 'fighter',
+    baseDmg: 30, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 9000,
+    abilities: {
+      1: null,
+      2: { name: 'Açoite Relâmpago', desc: 'Chicotada elétrica — 2.8x ATK + paralisa por 1 turno', fn: 'whiplash' },
+      3: { name: 'Prisão de Correntes', desc: 'Envolve o inimigo — 5x ATK + imobiliza por 2 turnos', fn: 'chainPrison' },
+    }
+  },
+  titan_fist: {
+    id: 'titan_fist', name: 'Punho do Titã', emoji: '🦾', class: 'fighter',
+    baseDmg: 55, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 22000,
+    abilities: {
+      1: null,
+      2: { name: 'Golpe Colossal', desc: 'Soco com força de titã — 4.5x ATK + reduz DEF em 50%', fn: 'colossalStrike' },
+      3: { name: 'Punho do Fim do Mundo', desc: 'Força máxima concentrada — 8x ATK, ignora toda defesa + atordoa 3 turnos', fn: 'worldEndFist' },
+    }
+  },
+  divine_staff: {
+    id: 'divine_staff', name: 'Cajado Divino', emoji: '✨', class: 'fighter',
+    baseDmg: 78, owned: false, equipped: false,
+    xp: 0, level: 1, xpToNext: 36000,
+    bossOnly: true,
+    abilities: {
+      1: null,
+      2: { name: 'Pulso Sagrado', desc: 'Libera energia divina — 5.5x ATK + cura 15% do HP máximo', fn: 'sacredPulse' },
+      3: { name: 'Punição Celestial', desc: 'O cajado dos deuses em ação — 11x ATK, ignora defesa e atordoa por 3 turnos', fn: 'celestialPunishment' },
+    }
+  },
 };
 
 // Devil Fruits
@@ -1919,6 +2130,63 @@ const fruitData = {
     passiveDesc: '20% de chance de refletir ataques automáticamente',
     passive: 'mirrorReflect',
     rarity: 'rare',
+  },
+  // === NOVAS FRUTAS v12 ===
+  alma: {
+    id: 'alma', name: 'Fruta da Alma', emoji: '👻',
+    desc: 'Manipula a essência das almas — drena força vital e ressuscita aliados espirituais',
+    price: 22000,
+    battleAbility: { name: 'Colheita das Almas', desc: 'Drena 40% do HP do inimigo e converte em cura para você', cooldown: 6 },
+    passiveDesc: 'Cada ataque tem 25% de chance de drenar 12% do HP inimigo como cura',
+    passive: 'soulDrain',
+    rarity: 'legendary',
+  },
+  girafa: {
+    id: 'girafa', name: 'Fruta da Girafa', emoji: '🦒',
+    desc: 'Transformação Zoan em girafa — pescoço extensível como lança e coices devastadores',
+    price: 7500,
+    battleAbility: { name: 'Pescoço Lança', desc: 'Estende o pescoço em alta velocidade — 4x ATK ignorando 50% da defesa', cooldown: 4 },
+    passiveDesc: '+20% ATK e ataques têm 20% de chance de atordoar por 1 turno',
+    passive: 'giraffeStun',
+    rarity: 'rare',
+  },
+  leopardo: {
+    id: 'leopardo', name: 'Fruta do Leopardo', emoji: '🐆',
+    desc: 'Zoan mítica do leopardo — velocidade e furtividade de um predador supremo',
+    price: 18000,
+    battleAbility: { name: 'Garra do Predador', desc: 'Ataque em modo bestial — 5x ATK com chance de sangramento e atordoamento', cooldown: 5 },
+    passiveDesc: '+30% velocidade e +20% de chance de desviar (instinto predatório)',
+    passive: 'leopardInstinct',
+    rarity: 'legendary',
+  },
+  trex: {
+    id: 'trex', name: 'Fruta do T-Rex', emoji: '🦖',
+    desc: 'Zoan ancestral do Tiranossauro Rex — força bruta do maior predador da história',
+    price: 28000,
+    battleAbility: { name: 'Rugido Primitivo', desc: 'Esmaga o inimigo com força colossal — 6x ATK + reduz DEF 70% por 3 turnos', cooldown: 6 },
+    passiveDesc: '+25% ATK permanente e reduz 20% do dano recebido (escamas antigas)',
+    passive: 'trexBuff',
+    rarity: 'legendary',
+  },
+  // === FRUTA DA ELETRICIDADE ===
+  goro: {
+    id: 'goro', name: 'Fruta da Eletricidade', emoji: '⚡',
+    desc: 'Goro Goro no Mi — transforma o corpo em relâmpago puro. Velocidade e destruição divina dos céus.',
+    price: 22000,
+    battleAbility: { name: 'Raigo — Descarga Máxima', desc: 'Libera 200 milhões de volts — dano massivo 5x ATK + paralisa por 2 turnos + ignora defesa', cooldown: 5 },
+    passiveDesc: 'Ataques têm 35% de chance de eletrocutar (paralisa 1 turno) e +20% de desvio como relâmpago',
+    passive: 'thunderPassive',
+    rarity: 'legendary',
+  },
+  // === FRUTA DO BUDDHA ===
+  buddha: {
+    id: 'buddha', name: 'Fruta do Buddha', emoji: '☸️',
+    desc: 'Hito Hito no Mi, Modelo: Daibutsu — Zoan Mítica que transforma em um colossal Buda dourado. O poder do Almirante Sengoku. Ataques dourados valem pelo oceano.',
+    price: 35000,
+    battleAbility: { name: 'Shockwave Dourada', desc: 'Libera uma onda de choque divina dourada — 7x ATK ignorando toda defesa + paralisa 2 turnos + cura 20% HP', cooldown: 6 },
+    passiveDesc: 'Forma Buda: reduz 40% do dano recebido + ataques têm 30% de chance de atordoar + +25% ATK permanente',
+    passive: 'buddhaBuff',
+    rarity: 'legendary',
   },
 };
 
@@ -2602,6 +2870,67 @@ const accessoryData = {
     bonuses: { atk: 220, spd: 150, def: 180, hp: 1200 },
     bossOnly: true,
   },
+  // === NOVOS ACESSÓRIOS v12 (loja) ===
+  acc_soul_necklace: {
+    id: 'acc_soul_necklace', name: 'Colar das Almas', emoji: '🔮',
+    slot: 'hand', slotLabel: 'MÃOS',
+    desc: 'Colar forjado com almas de guerreiros lendários. Drena a força dos inimigos.',
+    price: 25000,
+    bonuses: { atk: 110, spd: 70, def: 85, hp: 450 },
+  },
+  acc_predator_mask: {
+    id: 'acc_predator_mask', name: 'Máscara do Predador', emoji: '🐆',
+    slot: 'head', slotLabel: 'CABEÇA',
+    desc: 'Máscara esculpida no couro de um leopardo lendário. Instintos aguçados.',
+    price: 18000,
+    bonuses: { atk: 80, spd: 110, def: 55, hp: 300 },
+  },
+  acc_ancient_armor: {
+    id: 'acc_ancient_armor', name: 'Armadura Ancestral', emoji: '🦖',
+    slot: 'body', slotLabel: 'CORPO',
+    desc: 'Placas forjadas com escamas de criaturas ancestrais extintas. Dureza absoluta.',
+    price: 32000,
+    bonuses: { atk: 60, spd: 30, def: 180, hp: 800 },
+  },
+  acc_thunder_boots: {
+    id: 'acc_thunder_boots', name: 'Botas do Trovão', emoji: '⚡',
+    slot: 'feet', slotLabel: 'PÉS',
+    desc: 'Botas que canalizam eletricidade a cada passo. Velocidade e choque em cada golpe.',
+    price: 14000,
+    bonuses: { atk: 55, spd: 130, def: 30, hp: 200 },
+  },
+  acc_giraffe_scarf: {
+    id: 'acc_giraffe_scarf', name: 'Cachecol da Girafa', emoji: '🦒',
+    slot: 'body', slotLabel: 'CORPO',
+    desc: 'Cachecol alongado de seda especial. Aumenta alcance e agilidade nos combates.',
+    price: 11000,
+    bonuses: { atk: 65, spd: 55, def: 60, hp: 250 },
+  },
+  // === DROPS EXCLUSIVOS DE BOSSES v12 ===
+  acc_soul_crown: {
+    id: 'acc_soul_crown', name: 'Coroa das Almas', emoji: '👻',
+    slot: 'head', slotLabel: 'CABEÇA',
+    desc: 'Coroa forjada com centenas de almas. Poder espiritual absoluto.',
+    price: 0,
+    bonuses: { atk: 160, spd: 90, def: 140, hp: 900 },
+    bossOnly: true,
+  },
+  acc_trex_fang: {
+    id: 'acc_trex_fang', name: 'Presa do T-Rex', emoji: '🦖',
+    slot: 'hand', slotLabel: 'MÃOS',
+    desc: 'Dente ancestral do maior predador. Poder primitivo e devastador.',
+    price: 0,
+    bonuses: { atk: 200, spd: 70, def: 160, hp: 1000 },
+    bossOnly: true,
+  },
+  acc_leopard_hide: {
+    id: 'acc_leopard_hide', name: 'Pelagem do Leopardo', emoji: '🐆',
+    slot: 'body', slotLabel: 'CORPO',
+    desc: 'Pelagem do leopardo mítico. Velocidade e furtividade sobrenatural.',
+    price: 0,
+    bonuses: { atk: 140, spd: 160, def: 100, hp: 750 },
+    bossOnly: true,
+  },
 };
 
 const shopConsumables = [
@@ -2611,33 +2940,70 @@ const shopConsumables = [
 ];
 
 const shopWeapons = [
-  { id: 'weapon_slingshot', weaponId: 'slingshot', name: 'Estilingue', emoji: '🪃', desc: 'Projéteis rápidos. Classe: Atirador', price: 300, weaponClass: 'gunner' },
-  { id: 'weapon_dagger', weaponId: 'dagger', name: 'Adaga', emoji: '🗡️', desc: 'Arma leve e rápida. Classe: Espadachim', price: 300, weaponClass: 'swordsman' },
-  { id: 'weapon_staff', weaponId: 'staff', name: 'Cajado de Combate', emoji: '🪄', desc: 'Alcance e velocidade combinados. Classe: Lutador', price: 300, weaponClass: 'fighter' },
-  { id: 'weapon_nunchaku', weaponId: 'nunchaku', name: 'Nunchaku', emoji: '🪬', desc: 'Arma ágil e devastadora. Classe: Lutador', price: 500, weaponClass: 'fighter' },
-  { id: 'weapon_pistol', weaponId: 'pistol', name: 'Pistola', emoji: '🔫', desc: 'Arma de fogo padrão. Classe: Atirador', price: 600, weaponClass: 'gunner' },
-  { id: 'weapon_kicks', weaponId: 'kicks', name: 'Black Leg Style', emoji: '🦵', desc: 'Estilo de chutes do Sanji. Classe: Lutador', price: 800, weaponClass: 'fighter' },
-  { id: 'weapon_katana', weaponId: 'katana', name: 'Katana', emoji: '🔪', desc: 'Lâmina poderosa. Classe: Espadachim', price: 1100, weaponClass: 'swordsman' },
-  { id: 'weapon_scythe', weaponId: 'scythe', name: 'Foice', emoji: '⚔️', desc: 'Lâmina curva devastadora. Classe: Espadachim', price: 1800, weaponClass: 'swordsman' },
-  { id: 'weapon_musket', weaponId: 'musket', name: 'Mosquete', emoji: '🏹', desc: 'Dano massivo. Classe: Atirador', price: 2200, weaponClass: 'gunner' },
-  { id: 'weapon_gauntlet', weaponId: 'gauntlet', name: 'Manopla de Ferro', emoji: '🥊', desc: 'Soco de ferro puro. Classe: Lutador', price: 2200, weaponClass: 'fighter' },
-  { id: 'weapon_bone_staff', weaponId: 'bone_staff', name: 'Cajado de Osso', emoji: '🦴', desc: 'Arma pesada dos mares. Classe: Lutador', price: 2600, weaponClass: 'fighter' },
-  { id: 'weapon_dual_blades', weaponId: 'dual_blades', name: 'Lâminas Duplas', emoji: '⚔️', desc: 'Dois gumes, o dobro da destruição. Classe: Espadachim', price: 3100, weaponClass: 'swordsman' },
-  { id: 'weapon_rapid_bow', weaponId: 'rapid_bow', name: 'Arco de Combate Rápido', emoji: '🏹', desc: 'Flechas rápidas e versáteis. Classe: Atirador', price: 3100, weaponClass: 'gunner' },
-  { id: 'weapon_cannon', weaponId: 'cannon', name: 'Canhão de Mão', emoji: '💣', desc: 'Poder de fogo máximo. Classe: Atirador', price: 3700, weaponClass: 'gunner' },
-  { id: 'weapon_trident', weaponId: 'trident', name: 'Tridente do Mar', emoji: '🔱', desc: 'Tridente lendário das profundezas. Classe: Espadachim', price: 3700, weaponClass: 'swordsman' },
-  { id: 'weapon_iron_knuckles', weaponId: 'iron_knuckles', name: 'Manoplas de Aço', emoji: '🤛', desc: 'Manoplas forjadas em aço puro. Classe: Lutador', price: 4200, weaponClass: 'fighter' },
-  { id: 'weapon_hook_blade', weaponId: 'hook_blade', name: 'Gancho de Lâmina', emoji: '🪝', desc: 'Lâmina curva com gancho — versátil e mortal. Classe: Espadachim', price: 4800, weaponClass: 'swordsman' },
-  { id: 'weapon_sniper_rifle', weaponId: 'sniper_rifle', name: 'Rifle de Precisão', emoji: '🎯', desc: 'Tiro perfeito a longa distância. Classe: Atirador', price: 5500, weaponClass: 'gunner' },
-  { id: 'weapon_sea_king_lance', weaponId: 'sea_king_lance', name: 'Lança do Rei do Mar', emoji: '🔱', desc: 'Lança forjada com osso de Rei do Mar. Classe: Espadachim', price: 5500, weaponClass: 'swordsman' },
-  { id: 'weapon_gatling_gun', weaponId: 'gatling_gun', name: 'Metralhadora Gatling', emoji: '🔩', desc: 'Saraivada imparável de balas. Classe: Atirador', price: 6100, weaponClass: 'gunner' },
-  { id: 'weapon_thunder_sword', weaponId: 'thunder_sword', name: 'Espada do Trovão', emoji: '⚡', desc: 'Lâmina eletrificada com poder dos céus. Classe: Espadachim', price: 7200, weaponClass: 'swordsman' },
-  { id: 'weapon_armored_fists', weaponId: 'armored_fists', name: 'Punhos Blindados', emoji: '🤜', desc: 'Punhos reforçados com metal do Novo Mundo. Classe: Lutador', price: 8400, weaponClass: 'fighter' },
-  { id: 'weapon_pacifista_cannon', weaponId: 'pacifista_cannon', name: 'Canhão Pacifista', emoji: '🤖', desc: 'Arma tecnológica do Governo. Classe: Atirador', price: 9200, weaponClass: 'gunner' },
-  { id: 'weapon_war_hammer', weaponId: 'war_hammer', name: 'Martelo de Guerra', emoji: '🔨', desc: 'Martelo devastador forjado em metal do Novo Mundo. Classe: Lutador', price: 10900, weaponClass: 'fighter' },
-  { id: 'weapon_wado_ichimonji', weaponId: 'wado_ichimonji', name: 'Wado Ichimonji', emoji: '🗡️', desc: 'A espada branca de Zoro. Classe: Espadachim', price: 11300, weaponClass: 'swordsman' },
-  { id: 'weapon_eternal_pose_rifle', weaponId: 'eternal_pose_rifle', name: 'Rifle Eternal Pose', emoji: '🧭', desc: 'Rifle guiado pela Eternal Pose — precisão absoluta. Classe: Atirador', price: 13700, weaponClass: 'gunner' },
-  { id: 'weapon_black_sword', weaponId: 'black_sword', name: 'Espada Negra', emoji: '🖤', desc: 'Lâmina revestida de Haki — corta qualquer coisa. Classe: Espadachim', price: 16300, weaponClass: 'swordsman' },
+  // Tier 1 — Nível 1+ (armas iniciais)
+  { id: 'weapon_slingshot',       weaponId: 'slingshot',       name: 'Estilingue',              emoji: '🪃', desc: 'Projéteis rápidos. Classe: Atirador',                                    price: 300,   weaponClass: 'gunner',    minLevel: 1  },
+  { id: 'weapon_dagger',          weaponId: 'dagger',          name: 'Adaga',                   emoji: '🗡️', desc: 'Arma leve e rápida. Classe: Espadachim',                                 price: 300,   weaponClass: 'swordsman', minLevel: 1  },
+  { id: 'weapon_staff',           weaponId: 'staff',           name: 'Cajado de Combate',       emoji: '🪄', desc: 'Alcance e velocidade combinados. Classe: Lutador',                       price: 300,   weaponClass: 'fighter',   minLevel: 1  },
+  // Tier 2 — Nível 5+
+  { id: 'weapon_nunchaku',        weaponId: 'nunchaku',        name: 'Nunchaku',                emoji: '🪬', desc: 'Arma ágil e devastadora. Classe: Lutador',                               price: 500,   weaponClass: 'fighter',   minLevel: 5  },
+  { id: 'weapon_pistol',          weaponId: 'pistol',          name: 'Pistola',                 emoji: '🔫', desc: 'Arma de fogo padrão. Classe: Atirador',                                  price: 600,   weaponClass: 'gunner',    minLevel: 5  },
+  { id: 'weapon_kicks',           weaponId: 'kicks',           name: 'Black Leg Style',         emoji: '🦵', desc: 'Estilo de chutes do Sanji. Classe: Lutador',                             price: 800,   weaponClass: 'fighter',   minLevel: 5  },
+  // Tier 3 — Nível 10+
+  { id: 'weapon_katana',          weaponId: 'katana',          name: 'Katana',                  emoji: '🔪', desc: 'Lâmina poderosa. Classe: Espadachim',                                    price: 1100,  weaponClass: 'swordsman', minLevel: 10 },
+  { id: 'weapon_scythe',          weaponId: 'scythe',          name: 'Foice',                   emoji: '⚔️', desc: 'Lâmina curva devastadora. Classe: Espadachim',                           price: 1800,  weaponClass: 'swordsman', minLevel: 10 },
+  { id: 'weapon_musket',          weaponId: 'musket',          name: 'Mosquete',                emoji: '🏹', desc: 'Dano massivo. Classe: Atirador',                                         price: 2200,  weaponClass: 'gunner',    minLevel: 10 },
+  // Tier 4 — Nível 18+
+  { id: 'weapon_gauntlet',        weaponId: 'gauntlet',        name: 'Manopla de Ferro',        emoji: '🥊', desc: 'Soco de ferro puro. Classe: Lutador',                                    price: 2200,  weaponClass: 'fighter',   minLevel: 18 },
+  { id: 'weapon_bone_staff',      weaponId: 'bone_staff',      name: 'Cajado de Osso',          emoji: '🦴', desc: 'Arma pesada dos mares. Classe: Lutador',                                 price: 2600,  weaponClass: 'fighter',   minLevel: 18 },
+  { id: 'weapon_dual_blades',     weaponId: 'dual_blades',     name: 'Lâminas Duplas',          emoji: '⚔️', desc: 'Dois gumes, o dobro da destruição. Classe: Espadachim',                  price: 3100,  weaponClass: 'swordsman', minLevel: 18 },
+  { id: 'weapon_rapid_bow',       weaponId: 'rapid_bow',       name: 'Arco de Combate Rápido',  emoji: '🏹', desc: 'Flechas rápidas e versáteis. Classe: Atirador',                          price: 3100,  weaponClass: 'gunner',    minLevel: 18 },
+  // Tier 5 — Nível 28+
+  { id: 'weapon_cannon',          weaponId: 'cannon',          name: 'Canhão de Mão',           emoji: '💣', desc: 'Poder de fogo máximo. Classe: Atirador',                                 price: 3700,  weaponClass: 'gunner',    minLevel: 28 },
+  { id: 'weapon_trident',         weaponId: 'trident',         name: 'Tridente do Mar',         emoji: '🔱', desc: 'Tridente lendário das profundezas. Classe: Espadachim',                  price: 3700,  weaponClass: 'swordsman', minLevel: 28 },
+  { id: 'weapon_iron_knuckles',   weaponId: 'iron_knuckles',   name: 'Manoplas de Aço',         emoji: '🤛', desc: 'Manoplas forjadas em aço puro. Classe: Lutador',                         price: 4200,  weaponClass: 'fighter',   minLevel: 28 },
+  // Tier 6 — Nível 40+
+  { id: 'weapon_hook_blade',      weaponId: 'hook_blade',      name: 'Gancho de Lâmina',        emoji: '🪝', desc: 'Lâmina curva com gancho — versátil e mortal. Classe: Espadachim',        price: 4800,  weaponClass: 'swordsman', minLevel: 40 },
+  { id: 'weapon_sniper_rifle',    weaponId: 'sniper_rifle',    name: 'Rifle de Precisão',       emoji: '🎯', desc: 'Tiro perfeito a longa distância. Classe: Atirador',                      price: 5500,  weaponClass: 'gunner',    minLevel: 40 },
+  { id: 'weapon_sea_king_lance',  weaponId: 'sea_king_lance',  name: 'Lança do Rei do Mar',     emoji: '🔱', desc: 'Lança forjada com osso de Rei do Mar. Classe: Espadachim',               price: 5500,  weaponClass: 'swordsman', minLevel: 40 },
+  { id: 'weapon_gatling_gun',     weaponId: 'gatling_gun',     name: 'Metralhadora Gatling',    emoji: '🔩', desc: 'Saraivada imparável de balas. Classe: Atirador',                         price: 6100,  weaponClass: 'gunner',    minLevel: 40 },
+  // Tier 7 — Nível 55+
+  { id: 'weapon_thunder_sword',   weaponId: 'thunder_sword',   name: 'Espada do Trovão',        emoji: '⚡', desc: 'Lâmina eletrificada com poder dos céus. Classe: Espadachim',             price: 7200,  weaponClass: 'swordsman', minLevel: 55 },
+  { id: 'weapon_armored_fists',   weaponId: 'armored_fists',   name: 'Punhos Blindados',        emoji: '🤜', desc: 'Punhos reforçados com metal do Novo Mundo. Classe: Lutador',             price: 8400,  weaponClass: 'fighter',   minLevel: 55 },
+  { id: 'weapon_pacifista_cannon',weaponId: 'pacifista_cannon',name: 'Canhão Pacifista',        emoji: '🤖', desc: 'Arma tecnológica do Governo. Classe: Atirador',                          price: 9200,  weaponClass: 'gunner',    minLevel: 55 },
+  // Tier 8 — Nível 70+
+  { id: 'weapon_war_hammer',      weaponId: 'war_hammer',      name: 'Martelo de Guerra',       emoji: '🔨', desc: 'Martelo devastador forjado em metal do Novo Mundo. Classe: Lutador',     price: 10900, weaponClass: 'fighter',   minLevel: 70 },
+  { id: 'weapon_wado_ichimonji',  weaponId: 'wado_ichimonji',  name: 'Wado Ichimonji',          emoji: '🗡️', desc: 'A espada branca de Zoro. Classe: Espadachim',                            price: 11300, weaponClass: 'swordsman', minLevel: 70 },
+  { id: 'weapon_thunder_knuckle', weaponId: 'thunder_knuckle', name: 'Punho do Trovão',         emoji: '⚡', desc: 'Punho eletrificado devastador. Classe: Lutador',                         price: 14000, weaponClass: 'fighter',   minLevel: 70 },
+  { id: 'weapon_eternal_pose_rifle', weaponId: 'eternal_pose_rifle', name: 'Rifle Eternal Pose', emoji: '🧭', desc: 'Rifle guiado pela Eternal Pose — precisão absoluta. Classe: Atirador', price: 13700, weaponClass: 'gunner',    minLevel: 70 },
+  // Tier 9 — Nível 90+
+  { id: 'weapon_black_sword',     weaponId: 'black_sword',     name: 'Espada Negra',            emoji: '🖤', desc: 'Lâmina revestida de Haki — corta qualquer coisa. Classe: Espadachim',    price: 16300, weaponClass: 'swordsman', minLevel: 90 },
+  { id: 'weapon_phantom_scythe',  weaponId: 'phantom_scythe',  name: 'Foice Fantasma',          emoji: '👻', desc: 'Foice espectral que corta até a alma. Classe: Espadachim',               price: 17000, weaponClass: 'swordsman', minLevel: 90 },
+  { id: 'weapon_ancient_rifle',   weaponId: 'ancient_rifle',   name: 'Rifle Ancestral',         emoji: '🔭', desc: 'Rifle das eras antigas com poder lendário. Classe: Atirador',            price: 19500, weaponClass: 'gunner',    minLevel: 90 },
+  // Tier 10 — Nível 110+
+  { id: 'weapon_soul_blade',      weaponId: 'soul_blade',      name: 'Lâmina das Almas',        emoji: '🌙', desc: 'Espada imbuída de almas — poder supremo. Classe: Espadachim',            price: 22000, weaponClass: 'swordsman', minLevel: 110 },
+
+  // ── NOVAS ARMAS ──────────────────────────────────────────────────────────
+
+  // Swordsman — novas
+  { id: 'weapon_obsidian_blade',       weaponId: 'obsidian_blade',       name: 'Lâmina de Obsidiana',         emoji: '🗡️', desc: 'Corte afiado e explosivo. Classe: Espadachim',                        price: 900,   weaponClass: 'swordsman', minLevel: 8   },
+  { id: 'weapon_wind_blade',           weaponId: 'wind_blade',           name: 'Espada do Vento',             emoji: '💨', desc: 'Ataques à distância com projéteis de vento. Classe: Espadachim',     price: 2900,  weaponClass: 'swordsman', minLevel: 15  },
+  { id: 'weapon_sea_serpent_sword',    weaponId: 'sea_serpent_sword',    name: 'Espada da Serpente do Mar',   emoji: '🐍', desc: 'Veneno e imobilização. Classe: Espadachim',                          price: 8800,  weaponClass: 'swordsman', minLevel: 50  },
+  { id: 'weapon_celestial_edge',       weaponId: 'celestial_edge',       name: 'Lâmina Celestial',           emoji: '🌟', desc: 'Poder de luz pura — cega e devasta. Classe: Espadachim',             price: 24000, weaponClass: 'swordsman', minLevel: 105 },
+  // Enma, Canhão de Pluton e Cajado Divino são boss drops — não aparecem na loja
+
+  // Gunner — novas
+  { id: 'weapon_flintlock',            weaponId: 'flintlock',            name: 'Pistola Flintlock',           emoji: '🔫', desc: 'Duplo disparo perfurante. Classe: Atirador',                         price: 450,   weaponClass: 'gunner',    minLevel: 3   },
+  { id: 'weapon_bazooka',              weaponId: 'bazooka',              name: 'Bazuca',                      emoji: '💥', desc: 'Foguetes explosivos. Classe: Atirador',                              price: 5200,  weaponClass: 'gunner',    minLevel: 35  },
+  { id: 'weapon_tri_cannon',           weaponId: 'tri_cannon',           name: 'Canhão Triplo',               emoji: '🎯', desc: 'Três canos, poder triplicado. Classe: Atirador',                     price: 11000, weaponClass: 'gunner',    minLevel: 65  },
+  { id: 'weapon_electromagnetic_rifle',weaponId: 'electromagnetic_rifle',name: 'Rifle Eletromagnético',       emoji: '⚡', desc: 'Paralisa e destrói. Classe: Atirador',                              price: 18000, weaponClass: 'gunner',    minLevel: 95  },
+  // Pluton Cannon é boss drop — não aparece na loja
+
+  // Fighter — novas
+  { id: 'weapon_brass_knuckles',       weaponId: 'brass_knuckles',       name: 'Soco Inglês',                emoji: '🤛', desc: 'Socos rápidos e uppercut explosivo. Classe: Lutador',                price: 200,   weaponClass: 'fighter',   minLevel: 1   },
+  { id: 'weapon_steel_boots',          weaponId: 'steel_boots',          name: 'Botas de Aço',               emoji: '🥾', desc: 'Chutes pesados com impacto sísmico. Classe: Lutador',               price: 2000,  weaponClass: 'fighter',   minLevel: 12  },
+  { id: 'weapon_chain_whip',           weaponId: 'chain_whip',           name: 'Chicote de Correntes',       emoji: '⛓️', desc: 'Açoite elétrico e prisão de correntes. Classe: Lutador',            price: 6800,  weaponClass: 'fighter',   minLevel: 45  },
+  { id: 'weapon_titan_fist',           weaponId: 'titan_fist',           name: 'Punho do Titã',              emoji: '🦾', desc: 'Força de titã — devasta qualquer armadura. Classe: Lutador',        price: 20000, weaponClass: 'fighter',   minLevel: 105 },
+  // Cajado Divino é boss drop — não aparece na loja
 ];
 
 const shopFruits = Object.values(fruitData).map(f => ({
@@ -2921,7 +3287,8 @@ function renderBosses() {
         <div class="boss-reward">
           🏆 Recompensa: +${boss.xp} XP | +${boss.berry} 💰
           ${accReward ? `<br>💍 Drop Raro: ${accReward.emoji} ${accReward.name}` : ''}
-          <br>🍇 Fruta Aleatória: ${Math.round(boss.dropChance * 100)}% de chance
+          ${boss.dropChance ? `<br>🍇 Fruta Aleatória: ${Math.round(boss.dropChance * 100)}% de chance` : ''}
+          ${boss.dropWeapon && boss.dropWeaponChance ? `<br>⚔️ Arma Especial: ${Math.round(boss.dropWeaponChance * 100)}% de chance` : ''}
         </div>
         <div style="font-size:12px;color:var(--text-light);margin-bottom:10px">${boss.desc}</div>
         ${locked ? `<div class="boss-level-req">🔒 Requer Nível ${boss.minLevel}</div>` : (() => {
@@ -3200,6 +3567,9 @@ function getPlayerAtkTotal() {
   let atkMult = 1;
   if (player.devilFruit === 'wolf') atkMult = 1.10;
   if (player.devilFruit === 'ryu') atkMult *= 1.15;
+  if (player.devilFruit === 'trex') atkMult *= 1.25;
+  if (player.devilFruit === 'leopardo') atkMult *= 1.20;
+  if (player.devilFruit === 'buddha') atkMult *= 1.25;
   const accBonus = getAccessoryBonuses();
   const hakiAtk = getHakiAtkBonus();
   return Math.floor((player.atk + weaponDmg + accBonus.atk + hakiAtk) * atkMult);
@@ -3244,6 +3614,13 @@ function battleAction(action) {
       currentEnemy.hp = Math.max(0, currentEnemy.hp - drain);
       player.hp = Math.min(player.maxHp, player.hp + drain);
       burnMsg += ` <span class="log-fruit">🌑 Drena ${drain} HP!</span>`;
+    }
+    // Yami awakened passive — stronger drain
+    if (player.devilFruit === 'yami' && fruitData.yami._awakened && Math.random() < 0.35) {
+      const awakeDrain = Math.floor(currentEnemy.maxHp * 0.18);
+      currentEnemy.hp = Math.max(0, currentEnemy.hp - awakeDrain);
+      player.hp = Math.min(player.maxHp, player.hp + Math.floor(awakeDrain * 0.5));
+      burnMsg += ` <span class="log-fruit">🖤 DESPERTA — Vortex! Drenou ${awakeDrain} HP das trevas!</span>`;
     }
     if (player.devilFruit === 'hie' && Math.random() < 0.30) {
       enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
@@ -3329,7 +3706,33 @@ function battleAction(action) {
       addLog(`<span class="log-fruit">🪞 Reflexo do Espelho! ${reflectDmg} dano refletido!</span>`);
     }
 
-    // Wrong class weapon debuff message
+    // New fruit passives v12
+    if (player.devilFruit === 'alma' && Math.random() < 0.25) {
+      const drainAmt = Math.floor(currentEnemy.maxHp * 0.12);
+      currentEnemy.hp = Math.max(0, currentEnemy.hp - drainAmt);
+      player.hp = Math.min(player.maxHp, player.hp + drainAmt);
+      addLog(`<span class="log-fruit">👻 Colheita das Almas! Drenado ${drainAmt} HP!</span>`);
+    }
+    if (player.devilFruit === 'girafa' && Math.random() < 0.20) {
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+      addLog(`<span class="log-fruit">🦒 Pescoço Lança! Inimigo atordoado!</span>`);
+    }
+    if (player.devilFruit === 'leopardo' && Math.random() < 0.30) {
+      playerDmg = Math.floor(playerDmg * 1.2);
+      addLog(`<span class="log-fruit">🐆 Faro do Predador! Golpe crítico!</span>`);
+    }
+    if (player.devilFruit === 'trex' && Math.random() < 0.25) {
+      currentEnemy.def = Math.floor(currentEnemy.def * 0.3);
+      addLog(`<span class="log-fruit">🦖 Rugido Primitivo! DEF inimiga devastada!</span>`);
+    }
+    if (player.devilFruit === 'goro' && Math.random() < 0.35) {
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+      addLog(`<span class="log-fruit">⚡ Eletrocutado! ${currentEnemy.name} está paralisado!</span>`);
+    }
+    if (player.devilFruit === 'buddha' && Math.random() < 0.30) {
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+      addLog(`<span class="log-fruit">☸️ Aura do Buda! ${currentEnemy.name} foi atordoado pela luz dourada!</span>`);
+    }
     const cls = classData[player.class];
     if (!cls.allowedWeapons.includes(w.id)) {
       msg += ` <span class="log-debuff">[Penalidade de classe -50%]</span>`;
@@ -3431,8 +3834,19 @@ function battleAction(action) {
       playerDmg = h1 + h2 + h3;
       msg = `<span class="log-fruit">🐺 Frenesi Lupino! 3 golpes: ${h1}+${h2}+${h3} = ${playerDmg} dano!</span>`;
     } else if (player.devilFruit === 'yami') {
-      playerDmg = Math.max(1, Math.floor(totalAtk * 4 - currentEnemy.def * 0));
-      msg = `<span class="log-fruit">🌑 Kurouzu! Absorção dimensional — ${playerDmg} dano ignorando defesa!</span>`;
+      if (fruitData.yami._awakened) {
+        // Awakened: 6x ATK ignoring def + drain 30% HP + stun 2 turns
+        const savedDef2 = currentEnemy.def; currentEnemy.def = 0;
+        playerDmg = Math.max(1, Math.floor(totalAtk * 6.0 + Math.random() * 20));
+        currentEnemy.def = savedDef2;
+        const vortexDrain = Math.floor(currentEnemy.maxHp * 0.30);
+        currentEnemy.hp = Math.max(0, currentEnemy.hp - vortexDrain);
+        enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+        msg = `<span class="log-fruit">🖤 KUROUZU — VORTEX DAS TREVAS ETERNAS! ${playerDmg} dano + ${vortexDrain} HP drenado + paralisia 2 turnos!</span>`;
+      } else {
+        playerDmg = Math.max(1, Math.floor(totalAtk * 4 - currentEnemy.def * 0));
+        msg = `<span class="log-fruit">🌑 Kurouzu! Absorção dimensional — ${playerDmg} dano ignorando defesa!</span>`;
+      }
     } else if (player.devilFruit === 'hie') {
       playerDmg = Math.max(1, Math.floor(totalAtk * 2.5));
       enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
@@ -3527,9 +3941,46 @@ function battleAction(action) {
       player.statusEffects.push({ type: 'mirror_shield', turnsLeft: 1, value: totalAtk });
       playerDmg = 0;
       msg = `<span class="log-fruit">🪞 Specchio Bislungo! Espelho ativado — próximo ataque inimigo será refletido!</span>`;
+    // === NOVAS FRUTAS v12 ===
+    } else if (player.devilFruit === 'alma') {
+      playerDmg = Math.max(1, Math.floor(currentEnemy.maxHp * 0.40));
+      const almaHeal = Math.floor(playerDmg * 0.5);
+      player.hp = Math.min(player.maxHp, player.hp + almaHeal);
+      msg = `<span class="log-fruit">👻 Colheita das Almas! Drena ${playerDmg} HP + curou ${almaHeal}!</span>`;
+    } else if (player.devilFruit === 'girafa') {
+      const sd = currentEnemy.def; currentEnemy.def = Math.floor(currentEnemy.def * 0.5);
+      playerDmg = Math.max(1, Math.floor(totalAtk * 4.0));
+      currentEnemy.def = sd;
+      msg = `<span class="log-fruit">🦒 Pescoço Lança! ${playerDmg} dano ignorando metade da defesa!</span>`;
+    } else if (player.devilFruit === 'leopardo') {
+      playerDmg = Math.max(1, Math.floor(totalAtk * 5.0));
+      enemyStatusEffects.push({ type: 'bleed', turnsLeft: 3, value: Math.floor(totalAtk * 0.4) });
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+      msg = `<span class="log-fruit">🐆 Garra do Predador! ${playerDmg} dano + sangramento + atordoado!</span>`;
+    } else if (player.devilFruit === 'trex') {
+      playerDmg = Math.max(1, Math.floor(totalAtk * 6.0));
+      currentEnemy.def = Math.floor(currentEnemy.def * 0.3);
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+      msg = `<span class="log-fruit">🦖 Rugido Primitivo! ${playerDmg} dano colossal + DEF inimigo devastada + atordoado 2 turnos!</span>`;
+    // === FRUTA DA ELETRICIDADE — Goro Goro no Mi ===
+    } else if (player.devilFruit === 'goro') {
+      const savedDef = currentEnemy.def;
+      currentEnemy.def = 0;
+      playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 20));
+      currentEnemy.def = savedDef;
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+      msg = `<span class="log-fruit">⚡ RAIGO — 200 MILHÕES DE VOLTS! ${playerDmg} dano devastador ignorando defesa + paralisia por 2 turnos!</span>`;
+    // === FRUTA DO BUDDHA — Hito Hito no Mi Modelo: Daibutsu ===
+    } else if (player.devilFruit === 'buddha') {
+      const savedDef2 = currentEnemy.def;
+      currentEnemy.def = 0;
+      playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 25));
+      currentEnemy.def = savedDef2;
+      enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+      const healAmt = Math.floor(player.maxHp * 0.20);
+      player.hp = Math.min(player.maxHp, player.hp + healAmt);
+      msg = `<span class="log-fruit">☸️ SHOCKWAVE DOURADA DO BUDA! ${playerDmg} dano divino ignorando defesa + paralisia 2 turnos + curou ${healAmt} HP!</span>`;
     }
-
-    player.fruitCooldown = abilityInfo.cooldown;
 
   } else if (action === 'defend') {
     player.defending = true;
@@ -3715,6 +4166,10 @@ function enemyTurn() {
   if (player.devilFruit === 'bari') {
     dmg = Math.floor(dmg * 0.65);
   }
+  // buddha: Forma Buda reduz 40%
+  if (player.devilFruit === 'buddha') {
+    dmg = Math.floor(dmg * 0.60);
+  }
   // mocha: reduces 25% and chance to trap
   if (player.devilFruit === 'mocha') {
     dmg = Math.floor(dmg * 0.75);
@@ -3732,7 +4187,8 @@ function enemyTurn() {
     + (player.devilFruit === 'portal' ? 0.15 : 0)
     + (player.devilFruit === 'noro' ? 0.10 : 0)
     + (player.devilFruit === 'toki' ? 0.20 : 0)
-    + (player.devilFruit === 'mira' ? 0.12 : 0);
+    + (player.devilFruit === 'mira' ? 0.12 : 0)
+    + (player.devilFruit === 'goro' ? 0.20 : 0);
   const dodgeChance = Math.min(0.55, spdDodge + hakiDodge + fruitDodge); // cap máximo de 55%
   if (Math.random() < dodgeChance) {
     gainHakiObservacaoXP('dodge');
@@ -4111,17 +4567,30 @@ function renderShop() {
       const label = classData[cls].label;
       const wData = weaponData[item.weaponId];
       const baseDmg = wData ? wData.baseDmg : 0;
+      const reqLevel = item.minLevel || 1;
+      const levelLocked = player.level < reqLevel;
       const div = document.createElement('div');
       div.className = 'shop-item';
+      div.style.cssText = levelLocked ? 'opacity:0.55;position:relative;' : '';
+      const levelBadge = reqLevel > 1
+        ? `<div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:3px;display:inline-block;margin-bottom:8px;${levelLocked ? 'background:rgba(231,76,60,0.2);color:#e74c3c;border:1px solid #e74c3c;' : 'background:rgba(39,174,96,0.15);color:#27ae60;border:1px solid #27ae60;'}">
+            ${levelLocked ? `\uD83D\uDD12 Lv ${reqLevel} NECESS\u00C1RIO` : `\u2705 Lv ${reqLevel}+`}
+          </div>`
+        : '';
+      const lockOverlay = levelLocked
+        ? `<div style="position:absolute;inset:0;border-radius:6px;background:repeating-linear-gradient(-45deg,rgba(0,0,0,0.06) 0px,rgba(0,0,0,0.06) 4px,transparent 4px,transparent 12px);pointer-events:none;"></div>`
+        : '';
       div.innerHTML = `
+        ${lockOverlay}
         <span class="shop-emoji">${item.emoji}</span>
         <div class="shop-class-tag ${tagCls}">${label}</div>
+        ${levelBadge}
         <div class="shop-name">${item.name}</div>
         <div class="shop-desc">${item.desc}</div>
-        <div style="font-size:12px;color:#e74c3c;margin-bottom:8px">⚔ Dano Base: +${baseDmg}</div>
-        <div class="shop-price">💰 ${item.price} Berries</div>
-        <button class="buy-btn" onclick="buyWeapon('${item.weaponId}', ${item.price})" ${already ? 'disabled' : ''}>
-          ${already ? '✅ POSSUI' : 'COMPRAR'}
+        <div style="font-size:12px;color:#e74c3c;margin-bottom:8px">\u2694 Dano Base: +${baseDmg}</div>
+        <div class="shop-price">\uD83D\uDCB0 ${item.price} Berries</div>
+        <button class="buy-btn" onclick="buyWeapon('${item.weaponId}', ${item.price})" ${(already || levelLocked) ? 'disabled' : ''}>
+          ${already ? '\u2705 POSSUI' : levelLocked ? `\uD83D\uDD12 N\u00EDvel ${reqLevel}` : 'COMPRAR'}
         </button>
       `;
       grid.appendChild(div);
@@ -4211,6 +4680,9 @@ function buyConsumable(itemId) {
 function buyWeapon(weaponId, price) {
   if (player.berry < price) { showNotification('❌ Berries insuficientes!'); return; }
   if (weapons[weaponId] && weapons[weaponId].owned) { showNotification('❌ Você já possui essa arma!'); return; }
+  const shopEntry = shopWeapons.find(w => w.weaponId === weaponId);
+  const reqLevel = shopEntry ? (shopEntry.minLevel || 1) : 1;
+  if (player.level < reqLevel) { showNotification(`🔒 Nível ${reqLevel} necessário para comprar esta arma!`); return; }
   player.berry -= price;
   weapons[weaponId].owned = true;
   showNotification(`✅ Comprou ${weapons[weaponId].name}!`);
@@ -4760,6 +5232,218 @@ function useWeaponAbility(fn, abilityName) {
   } else if (fn === 'cannonBarrage') {
     playerDmg = Math.max(1, Math.floor(totalAtk * 3.2 + Math.floor(Math.random() * 15) - currentEnemy.def));
     msg = `<span class="log-player">💣 Barragem de Canhão! ${playerDmg} de dano!</span>`;
+  // === NOVAS HABILIDADES v12 ===
+  } else if (fn === 'spectralCut') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 15));
+    const drainHp = Math.floor(playerDmg * 0.15);
+    player.hp = Math.min(player.maxHp, player.hp + drainHp);
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">🌙 Corte Espectral! ${playerDmg} dano + drenado ${drainHp} HP!</span>`;
+  } else if (fn === 'soulStorm') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 25));
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">👻 Tempestade de Almas! ${playerDmg} dano devastador!</span>`;
+  } else if (fn === 'electricStrike') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.5 + Math.random() * 12 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">⚡ Golpe Elétrico! ${playerDmg} dano + inimigo paralizado!</span>`;
+  } else if (fn === 'fullDischarge') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 6.0 + Math.random() * 20 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+    msg = `<span class="log-player">⚡ Descarga Total! ${playerDmg} dano + atordoado por 2 turnos!</span>`;
+  } else if (fn === 'piercingRound') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 15 - Math.floor(currentEnemy.def * 0.3)));
+    msg = `<span class="log-player">🔭 Bala Perfurante! ${playerDmg} dano (ignora 70% da defesa)!</span>`;
+  } else if (fn === 'devastatingBurst') {
+    const h1 = Math.max(1, Math.floor(totalAtk * 2.3)), h2 = Math.max(1, Math.floor(totalAtk * 2.3)), h3 = Math.max(1, Math.floor(totalAtk * 2.4));
+    playerDmg = h1 + h2 + h3;
+    msg = `<span class="log-player">🔭 Rajada Devastadora! 3 balas — ${playerDmg} dano total!</span>`;
+  } else if (fn === 'dragonRend') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 18 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'bleed', turnsLeft: 4, value: Math.floor(totalAtk * 0.4) });
+    msg = `<span class="log-player">🐉 Rasgo Dracônico! ${playerDmg} dano + sangramento pesado por 4 turnos!</span>`;
+  } else if (fn === 'dragonFury') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 8.0 + Math.random() * 28));
+    enemyStatusEffects.push({ type: 'burn', turnsLeft: 3, value: Math.floor(totalAtk * 0.6) });
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">🐉 Fúria do Dragão! ${playerDmg} dano + queimadura massiva!</span>`;
+  } else if (fn === 'spectralReap') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 14 - currentEnemy.def));
+    const drainHp2 = Math.floor(playerDmg * 0.20);
+    player.hp = Math.min(player.maxHp, player.hp + drainHp2);
+    msg = `<span class="log-player">👻 Ceifa Espectral! ${playerDmg} dano + drenado ${drainHp2} HP!</span>`;
+  } else if (fn === 'deathDance') {
+    const hits = [1.5,1.5,1.5,1.5,1.5].map(() => {
+      const sd2 = currentEnemy.def; currentEnemy.def = 0;
+      const h = Math.max(1, Math.floor(totalAtk * 1.5));
+      currentEnemy.def = sd2;
+      return h;
+    });
+    playerDmg = hits.reduce((a,b) => a+b, 0);
+    msg = `<span class="log-player">💀 Dança da Morte! 5 cortes fantasmagóricos — ${playerDmg} dano total!</span>`;
+  } else if (fn === 'hookSlash') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.8 + Math.random() * 12 - Math.floor(currentEnemy.def * 0.7)));
+    msg = `<span class="log-player">🪝 Rasgo Giratório! ${playerDmg} dano (ignora 30% da defesa)!</span>`;
+  } else if (fn === 'deathDrag') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 18 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'bleed', turnsLeft: 3, value: Math.floor(totalAtk * 0.3) });
+    msg = `<span class="log-player">🪝 Arrasto da Morte! ${playerDmg} dano + sangramento!</span>`;
+
+  // ── SWORDSMAN — novos ──────────────────────────────────────────────────
+  } else if (fn === 'sharpCut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.2 + Math.random() * 10 - Math.floor(currentEnemy.def * 0.75)));
+    msg = `<span class="log-player">🗡️ Corte Afiado! ${playerDmg} dano (ignora 25% da defesa)!</span>`;
+  } else if (fn === 'obsidianBurst') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 16 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'bleed', turnsLeft: 3, value: Math.floor(totalAtk * 0.35) });
+    msg = `<span class="log-player">💎 Explosão de Obsidiana! ${playerDmg} dano + sangramento pesado!</span>`;
+  } else if (fn === 'windBlade') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.random() * 12 - currentEnemy.def));
+    msg = `<span class="log-player">💨 Rajada Cortante! ${playerDmg} dano à distância!</span>`;
+  } else if (fn === 'bladeStorm') {
+    const bsHits = Array.from({length: 6}, () => Math.max(1, Math.floor(totalAtk * 1.2 - Math.floor(currentEnemy.def * 0.4))));
+    playerDmg = bsHits.reduce((a, b) => a + b, 0);
+    msg = `<span class="log-player">🌀💨 Tempestade de Gume! 6 projéteis — ${playerDmg} dano total!</span>`;
+  } else if (fn === 'serpentBite') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.0 + Math.random() * 12 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'poison', turnsLeft: 4, value: Math.floor(totalAtk * 0.3) });
+    msg = `<span class="log-player">🐍 Mordida da Serpente! ${playerDmg} dano + veneno por 4 turnos!</span>`;
+  } else if (fn === 'serpentCoil') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.5 + Math.random() * 20 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+    msg = `<span class="log-player">🐍 Enrolamento Fatal! ${playerDmg} dano + imobilizado por 2 turnos!</span>`;
+  } else if (fn === 'starCut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 16 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">🌟 Corte Estelar! ${playerDmg} dano + inimigo cego!</span>`;
+  } else if (fn === 'divineJudgement') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 9.0 + Math.random() * 28));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+    currentEnemy.def = sd;
+    player.specialCooldown = 6;
+    msg = `<span class="log-player">✨ Julgamento Divino! ${playerDmg} DANO DIVINO + atordoado!</span>`;
+  } else if (fn === 'enmaSlash') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 20));
+    player.hp = Math.max(1, player.hp - Math.floor(player.maxHp * 0.05)); // Enma drains user's Haki
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">⚫ Golpe de Enma! Drenando seu Haki... ${playerDmg} dano dimensional!</span>`;
+  } else if (fn === 'kingOfHell') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 10.0 + Math.random() * 30));
+    currentEnemy.def = sd;
+    player.specialCooldown = 7;
+    msg = `<span class="log-player">👹 King of Hell! ${playerDmg} DANO LENDÁRIO!</span>`;
+
+  // ── GUNNER — novos ─────────────────────────────────────────────────────
+  } else if (fn === 'doubleShot') {
+    const ds1 = Math.max(1, Math.floor(totalAtk * 1.3 - currentEnemy.def));
+    const ds2 = Math.max(1, Math.floor(totalAtk * 1.3 - currentEnemy.def));
+    playerDmg = ds1 + ds2;
+    msg = `<span class="log-player">🔫 Disparo Duplo! ${ds1}+${ds2} = ${playerDmg} dano!</span>`;
+  } else if (fn === 'piercingBullet') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.2 + Math.random() * 12 - Math.floor(currentEnemy.def * 0.4)));
+    msg = `<span class="log-player">🔫 Bala Perfurante! ${playerDmg} dano (60% da defesa ignorada)!</span>`;
+  } else if (fn === 'rocketShot') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.5 + Math.random() * 14 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'burn', turnsLeft: 2, value: Math.floor(totalAtk * 0.4) });
+    msg = `<span class="log-player">💥 Foguete Direto! ${playerDmg} dano + queimadura 2 turnos!</span>`;
+  } else if (fn === 'rocketBarrage') {
+    const rbHits = Array.from({length: 4}, () => Math.max(1, Math.floor(totalAtk * 1.5 - currentEnemy.def)));
+    playerDmg = rbHits.reduce((a, b) => a + b, 0);
+    msg = `<span class="log-player">💥 Saraivada de Foguetes! 4 impactos — ${playerDmg} dano total!</span>`;
+  } else if (fn === 'tripleBarrel') {
+    const tb1 = Math.max(1, Math.floor(totalAtk * 1.8 - currentEnemy.def));
+    const tb2 = Math.max(1, Math.floor(totalAtk * 1.8 - currentEnemy.def));
+    const tb3 = Math.max(1, Math.floor(totalAtk * 1.8 - currentEnemy.def));
+    playerDmg = tb1 + tb2 + tb3;
+    msg = `<span class="log-player">🎯 Salva Tripla! ${tb1}+${tb2}+${tb3} = ${playerDmg} dano!</span>`;
+  } else if (fn === 'fireStorm') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 22 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'burn', turnsLeft: 3, value: Math.floor(totalAtk * 0.5) });
+    player.specialCooldown = 5;
+    msg = `<span class="log-player">🔥🎯 Tempestade de Fogo! ${playerDmg} dano + queimadura intensa!</span>`;
+  } else if (fn === 'magneticShot') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 15 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">⚡ Disparo Magnético! ${playerDmg} dano + paralisa 1 turno!</span>`;
+  } else if (fn === 'empBlast') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 22));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+    currentEnemy.def = sd;
+    player.specialCooldown = 5;
+    msg = `<span class="log-player">⚡ Pulso EMP! ${playerDmg} dano + habilidades anuladas por 2 turnos!</span>`;
+  } else if (fn === 'ancientShot') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 6.0 + Math.random() * 22));
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">☢️ Disparo Ancestral! ${playerDmg} dano — poder de Pluton!</span>`;
+  } else if (fn === 'totalAnnihilation') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 12.0 + Math.random() * 35));
+    currentEnemy.def = sd;
+    player.specialCooldown = 8;
+    msg = `<span class="log-player">☢️ ANIQUILAÇÃO TOTAL! ${playerDmg} DANO ABSOLUTO DE PLUTON!</span>`;
+
+  // ── FIGHTER — novos ────────────────────────────────────────────────────
+  } else if (fn === 'rapidJab') {
+    const rj1 = Math.max(1, Math.floor(totalAtk * 0.9 - currentEnemy.def));
+    const rj2 = Math.max(1, Math.floor(totalAtk * 0.9 - currentEnemy.def));
+    const rj3 = Math.max(1, Math.floor(totalAtk * 0.9 - currentEnemy.def));
+    playerDmg = rj1 + rj2 + rj3;
+    msg = `<span class="log-player">🤛 Jab Rápido! 3 socos — ${rj1}+${rj2}+${rj3} = ${playerDmg} dano!</span>`;
+  } else if (fn === 'explosiveUppercut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.0 + Math.random() * 14 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">🤜 Uppercut Explosivo! ${playerDmg} dano + atordoado!</span>`;
+  } else if (fn === 'spinKick') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.random() * 10 - currentEnemy.def));
+    currentEnemy.atk = Math.floor(currentEnemy.atk * 0.85);
+    msg = `<span class="log-player">🥾 Chute Giratório! ${playerDmg} dano + SPD inimigo reduzido!</span>`;
+  } else if (fn === 'groundStomp') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 18 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">🥾 Pisão da Terra! ${playerDmg} dano sísmico + atordoado!</span>`;
+  } else if (fn === 'whiplash') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.8 + Math.random() * 12 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
+    msg = `<span class="log-player">⛓️ Açoite Relâmpago! ${playerDmg} dano + paralisa!</span>`;
+  } else if (fn === 'chainPrison') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 18 - currentEnemy.def));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+    player.specialCooldown = 5;
+    msg = `<span class="log-player">⛓️ Prisão de Correntes! ${playerDmg} dano + imobilizado por 2 turnos!</span>`;
+  } else if (fn === 'colossalStrike') {
+    currentEnemy.def = Math.floor(currentEnemy.def * 0.5);
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 18));
+    msg = `<span class="log-player">🦾 Golpe Colossal! ${playerDmg} dano + DEF inimigo reduzida 50%!</span>`;
+  } else if (fn === 'worldEndFist') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 8.0 + Math.random() * 26));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 3, value: 0 });
+    currentEnemy.def = sd;
+    player.specialCooldown = 7;
+    msg = `<span class="log-player">💥🦾 Punho do Fim do Mundo! ${playerDmg} DANO MÁXIMO + atordoado 3 turnos!</span>`;
+  } else if (fn === 'sacredPulse') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.5 + Math.random() * 20));
+    const healAmt = Math.floor(player.maxHp * 0.15);
+    player.hp = Math.min(player.maxHp, player.hp + healAmt);
+    currentEnemy.def = sd;
+    msg = `<span class="log-player">✨ Pulso Sagrado! ${playerDmg} dano + curou ${healAmt} HP!</span>`;
+  } else if (fn === 'celestialPunishment') {
+    const sd = currentEnemy.def; currentEnemy.def = 0;
+    playerDmg = Math.max(1, Math.floor(totalAtk * 11.0 + Math.random() * 35));
+    enemyStatusEffects.push({ type: 'stun', turnsLeft: 3, value: 0 });
+    currentEnemy.def = sd;
+    player.specialCooldown = 8;
+    msg = `<span class="log-player">✨ Punição Celestial! ${playerDmg} DANO DOS DEUSES + atordoado 3 turnos!</span>`;
+
   } else {
     // fallback to base special
     playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.floor(Math.random() * 12) - currentEnemy.def));
@@ -5963,6 +6647,34 @@ const raidData = [
         isWhitebeard: true },
     ],
   },
+  {
+    id: 'blackbeard_raid',
+    name: 'Raid do Barba Negra',
+    subtitle: 'OS DEZ TITÃS DAS TREVAS',
+    emoji: '🖤',
+    desc: 'Enfrente os lendários Dez Titãs da tripulação de Marshall D. Teach numa batalha sombria de 10 ondas. Ao final, o próprio Barba Negra — portador de dois poderes de Fruta do Diabo — aguarda para consumir sua existência nas trevas eternas.',
+    minLevel: 90,
+    entryCost: 15000,
+    requireFruit: true,
+    baseXpReward: 65000,
+    baseBerryReward: 85000,
+    cooldown: 0,
+    waves: [
+      { num: 1,  name: 'Doc Q',           emoji: '🎲', baseHp: 4200,  baseAtk: 210, baseDef: 60,  isBoss: false },
+      { num: 2,  name: 'Vasco Shot',       emoji: '🍺', baseHp: 4600,  baseAtk: 228, baseDef: 65,  isBoss: false },
+      { num: 3,  name: 'Catarina Devon',   emoji: '🐍', baseHp: 5000,  baseAtk: 245, baseDef: 70,  isBoss: false },
+      { num: 4,  name: 'Laffitte',         emoji: '🪶', baseHp: 5500,  baseAtk: 262, baseDef: 75,  isBoss: false },
+      { num: 5,  name: 'Avalo Pizarro',    emoji: '☠️', baseHp: 6200,  baseAtk: 282, baseDef: 82,  isBoss: true  },
+      { num: 6,  name: 'Van Augur',        emoji: '🎯', baseHp: 6900,  baseAtk: 305, baseDef: 88,  isBoss: true  },
+      { num: 7,  name: 'Shiryu da Chuva',  emoji: '🌧️', baseHp: 8000,  baseAtk: 335, baseDef: 98,  isBoss: true  },
+      { num: 8,  name: 'Jesus Burgess',    emoji: '💪', baseHp: 9200,  baseAtk: 365, baseDef: 108, isBoss: true  },
+      { num: 9,  name: 'Kuzan — Aokiji',  emoji: '🧊', baseHp: 12000, baseAtk: 420, baseDef: 130, isBoss: true,
+        dropFruit: 'hie', dropFruitChance: 0.30, dropFruitName: 'Fruta do Gelo (Hie Hie no Mi)' },
+      { num: 10, name: 'Marshall D. Teach — Barba Negra', emoji: '🖤', baseHp: 22000, baseAtk: 580, baseDef: 175, isBoss: true,
+        dropFruit: 'yami', dropFruitChance: 0.20, dropFruitName: 'Fruta das Trevas (Yami Yami no Mi)',
+        isBlackbeard: true },
+    ],
+  },
 ];
 
 // Register naginata_wb as a weapon if not existing
@@ -5993,6 +6705,7 @@ let raidState = {
   drops: [],
   phase: 'battle', // 'battle', 'heal', 'complete', 'fail'
   guraAwakened: false, // tracks if gura was equipped before the raid
+  yamiAwakened: false, // tracks if yami was equipped when Blackbeard was defeated
 };
 let raidBattleTimerRefresh = null;
 
@@ -6013,6 +6726,7 @@ function buildRaidEnemy(wave) {
     def: Math.floor(wave.baseDef * scale),
     isBoss: wave.isBoss,
     isWhitebeard: wave.isWhitebeard || false,
+    isBlackbeard: wave.isBlackbeard || false,
     dropFruit: wave.dropFruit || null,
     dropFruitChance: wave.dropFruitChance || 0,
     dropFruitName: wave.dropFruitName || '',
@@ -6343,6 +7057,16 @@ function raidAction(action) {
       raidState.waveEnemyStatusEffects.push({ type: 'stun', turnsLeft: 1, value: 0 });
       msg += ` <span style="color:#9b59b6">💥 Tremor — inimigo atordoado!</span>`;
     }
+    // Buddha: shockwave divina — 7x ATK ignorando defesa + stun 2 turnos + cura 20% HP
+    if (player.devilFruit === 'buddha') {
+      const savedDef = enemy.def; enemy.def = 0;
+      playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 25));
+      enemy.def = savedDef;
+      raidState.waveEnemyStatusEffects.push({ type: 'stun', turnsLeft: 2, value: 0 });
+      const raidHeal = Math.floor(player.maxHp * 0.20);
+      player.hp = Math.min(player.maxHp, player.hp + raidHeal);
+      msg = `<span style="color:#f0d060">☸️ SHOCKWAVE DOURADA DO BUDA! ${playerDmg} dano divino ignorando defesa + paralisia 2 turnos + curou ${raidHeal} HP!</span>`;
+    }
   } else if (action === 'defend') {
     player.defending = true;
     if (player.haki && player.haki.observacao) { player.haki.observacao.xp += 5; player.haki.observacao.totalActions++; }
@@ -6436,6 +7160,7 @@ function raidEnemyTurn() {
   // Fruit passives
   if (player.devilFruit === 'numa') enemyDmg = Math.floor(enemyDmg * 0.7);
   if (player.devilFruit === 'bari') enemyDmg = Math.floor(enemyDmg * 0.65);
+  if (player.devilFruit === 'buddha') enemyDmg = Math.floor(enemyDmg * 0.60);
 
   if (player.defending) { enemyDmg = Math.floor(enemyDmg * 0.5); player.defending = false; }
 
@@ -6449,6 +7174,19 @@ function raidEnemyTurn() {
   if (enemy.isWhitebeard && enemy.hp < enemy.maxHp * 0.3 && Math.random() < 0.4) {
     enemyDmg = Math.floor(enemyDmg * 2.2);
     raidAddLog(`<span style="color:#e74c3c">🌊 KAIROU — Barba Branca rachou o céu! Dano massivo!</span>`);
+  }
+
+  // Blackbeard special: darkness absorption cancels fruit passive at low HP
+  if (enemy.isBlackbeard) {
+    if (enemy.hp < enemy.maxHp * 0.5 && Math.random() < 0.35) {
+      enemyDmg = Math.floor(enemyDmg * 1.8);
+      raidAddLog(`<span style="color:#1a1a2e">🖤 KUROUZU! Barba Negra suga toda a escuridão — dano massivo!</span>`);
+    }
+    if (enemy.hp < enemy.maxHp * 0.25 && Math.random() < 0.3) {
+      const quakeDmg = Math.floor(enemy.atk * 0.8);
+      player.hp = Math.max(0, player.hp - quakeDmg);
+      raidAddLog(`<span style="color:#e74c3c">💥 GURA GURA + YAMI YAMI! Dois poderes combinados — ${quakeDmg} dano extra de terremoto nas trevas!</span>`);
+    }
   }
 
   player.hp = Math.max(0, player.hp - enemyDmg);
@@ -6533,6 +7271,11 @@ function raidWaveVictory() {
   // Check if Whitebeard was defeated and player has Gura equipped = awakening
   if (enemy.isWhitebeard && player.devilFruit === 'gura') {
     raidState.guraAwakened = true;
+  }
+
+  // Check if Blackbeard was defeated and player has Yami equipped = awakening
+  if (enemy.isBlackbeard && player.devilFruit === 'yami') {
+    raidState.yamiAwakened = true;
   }
 
   raidState.waveActive = false;
@@ -6631,6 +7374,27 @@ function completeRaid() {
       </div>`;
   }
 
+  // Yami awakening bonus
+  if (raidState.yamiAwakened) {
+    if (!fruitData.yami._awakened) {
+      fruitData.yami._awakened = true;
+      fruitData.yami.passiveDesc = '🖤 DESPERTA: 35% de chance de drenar 18% HP em cada ataque + imunidade parcial a atordoamento';
+      fruitData.yami.battleAbility.name = 'Kurouzu — Vortex das Trevas Eternas';
+      fruitData.yami.battleAbility.desc = 'DESPERTADA: Suga tudo para o vazio — 6x ATK ignorando defesa + drena 30% HP inimigo + paralisa 2 turnos';
+      fruitData.yami._awakenedAbility = true;
+    }
+    awakenHtml += `
+      <div class="raid-awakened-banner" style="border-color:#2c3e50;background:linear-gradient(135deg,rgba(20,20,40,0.9),rgba(44,62,80,0.5))">
+        <h3 style="color:#8e44ad">🖤 FRUTA DAS TREVAS DESPERTOU!</h3>
+        <div style="font-size:13px;color:var(--text-light);line-height:1.7">
+          Ao derrotar o próprio Barba Negra com a Yami Yami no Mi, você absorveu a escuridão suprema!<br>
+          ✅ Passiva aprimorada: <strong>35% de drenagem de 18% HP + resistência a paralisia</strong><br>
+          🖤 Novo poder: <strong>Kurouzu — Vortex das Trevas Eternas</strong><br>
+          &nbsp;&nbsp;&nbsp;6x ATK ignorando defesa + drena 30% HP + paralisa 2 turnos!
+        </div>
+      </div>`;
+  }
+
   const body = document.getElementById('raid-battle-body');
   if (body) {
     body.innerHTML = `
@@ -6699,6 +7463,7 @@ function _saveGameExtras() {
     const data = JSON.parse(raw);
     data.raidCooldowns = raidData.map(r => ({ id: r.id, cooldown: r.cooldown }));
     data.guraAwakened = fruitData.gura && fruitData.gura._awakened;
+    data.yamiAwakened = fruitData.yami && fruitData.yami._awakened;
     localStorage.setItem(SAVE_KEY, JSON.stringify(data));
   } catch(e) {}
 }
@@ -6718,6 +7483,13 @@ function _loadGameExtras() {
       fruitData.gura._awakened = true;
       fruitData.gura.passiveDesc = '💥 DESPERTA: 25% chance de atordoar em cada ataque + +20% dano geral';
       fruitData.gura.battleAbility.name = 'Duplo Tsunami + ' + (fruitData.gura.battleAbility.name.replace('Duplo Tsunami + ',''));
+    }
+    if (data.yamiAwakened && fruitData.yami) {
+      fruitData.yami._awakened = true;
+      fruitData.yami.passiveDesc = '🖤 DESPERTA: 35% de chance de drenar 18% HP em cada ataque + imunidade parcial a atordoamento';
+      fruitData.yami.battleAbility.name = 'Kurouzu — Vortex das Trevas Eternas';
+      fruitData.yami.battleAbility.desc = 'DESPERTADA: Suga tudo para o vazio — 6x ATK ignorando defesa + drena 30% HP inimigo + paralisa 2 turnos';
+      fruitData.yami._awakenedAbility = true;
     }
     if (document.getElementById('screen-raid').classList.contains('active')) renderRaid();
   } catch(e) {}
@@ -6863,6 +7635,88 @@ function raidUseWeaponAbility(fn, abilityName) {
     enemy.def = 0;
     playerDmg = Math.max(1, Math.floor(totalAtk * 6 + Math.random() * 25));
     enemy.def = savedDef;
+
+  // ── SWORDSMAN — novos ──────────────────────────────────────────────────
+  } else if (fn === 'sharpCut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.2 + Math.random() * 10 - Math.floor(enemy.def * 0.75)));
+  } else if (fn === 'obsidianBurst') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 16 - enemy.def));
+    raidState.waveEnemyStatusEffects.push({ type: 'bleed', turnsLeft: 3, value: Math.floor(totalAtk * 0.35) });
+  } else if (fn === 'windBlade') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.random() * 12 - enemy.def));
+  } else if (fn === 'bladeStorm') {
+    playerDmg = Array.from({length:6}, () => Math.max(1, Math.floor(totalAtk * 1.2 - Math.floor(enemy.def * 0.4)))).reduce((a,b)=>a+b,0);
+  } else if (fn === 'serpentBite') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.0 + Math.random() * 12 - enemy.def));
+    raidState.waveEnemyStatusEffects.push({ type: 'poison', turnsLeft: 4, value: Math.floor(totalAtk * 0.3) });
+  } else if (fn === 'serpentCoil') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.5 + Math.random() * 20 - enemy.def));
+    stunTurns = 2;
+  } else if (fn === 'starCut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 16 - enemy.def));
+    stunTurns = 1;
+  } else if (fn === 'divineJudgement') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 9.0 + Math.random() * 28)); enemy.def = savedDef;
+    stunTurns = 2;
+  } else if (fn === 'enmaSlash') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 20)); enemy.def = savedDef;
+    player.hp = Math.max(1, player.hp - Math.floor(player.maxHp * 0.05));
+  } else if (fn === 'kingOfHell') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 10.0 + Math.random() * 30)); enemy.def = savedDef;
+
+  // ── GUNNER — novos ─────────────────────────────────────────────────────
+  } else if (fn === 'doubleShot') {
+    playerDmg = Math.max(1,Math.floor(totalAtk*1.3-enemy.def)) + Math.max(1,Math.floor(totalAtk*1.3-enemy.def));
+  } else if (fn === 'piercingBullet') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.2 + Math.random() * 12 - Math.floor(enemy.def * 0.4)));
+  } else if (fn === 'rocketShot') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.5 + Math.random() * 14 - enemy.def));
+    raidState.waveEnemyStatusEffects.push({ type: 'burn', turnsLeft: 2, value: Math.floor(totalAtk * 0.4) });
+  } else if (fn === 'rocketBarrage') {
+    playerDmg = Array.from({length:4}, () => Math.max(1, Math.floor(totalAtk * 1.5 - enemy.def))).reduce((a,b)=>a+b,0);
+  } else if (fn === 'tripleBarrel') {
+    playerDmg = Array.from({length:3}, () => Math.max(1, Math.floor(totalAtk * 1.8 - enemy.def))).reduce((a,b)=>a+b,0);
+  } else if (fn === 'fireStorm') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 22 - enemy.def));
+    raidState.waveEnemyStatusEffects.push({ type: 'burn', turnsLeft: 3, value: Math.floor(totalAtk * 0.5) });
+  } else if (fn === 'magneticShot') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.0 + Math.random() * 15 - enemy.def)); stunTurns = 1;
+  } else if (fn === 'empBlast') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 7.0 + Math.random() * 22)); enemy.def = savedDef;
+    stunTurns = 2;
+  } else if (fn === 'ancientShot') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 6.0 + Math.random() * 22)); enemy.def = savedDef;
+  } else if (fn === 'totalAnnihilation') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 12.0 + Math.random() * 35)); enemy.def = savedDef;
+
+  // ── FIGHTER — novos ────────────────────────────────────────────────────
+  } else if (fn === 'rapidJab') {
+    playerDmg = Array.from({length:3}, () => Math.max(1, Math.floor(totalAtk * 0.9 - enemy.def))).reduce((a,b)=>a+b,0);
+  } else if (fn === 'explosiveUppercut') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 3.0 + Math.random() * 14 - enemy.def)); stunTurns = 1;
+  } else if (fn === 'spinKick') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.random() * 10 - enemy.def));
+    enemy.atk = Math.floor(enemy.atk * 0.85);
+  } else if (fn === 'groundStomp') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 18 - enemy.def)); stunTurns = 1;
+  } else if (fn === 'whiplash') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 2.8 + Math.random() * 12 - enemy.def)); stunTurns = 1;
+  } else if (fn === 'chainPrison') {
+    playerDmg = Math.max(1, Math.floor(totalAtk * 5.0 + Math.random() * 18 - enemy.def)); stunTurns = 2;
+  } else if (fn === 'colossalStrike') {
+    enemy.def = Math.floor(enemy.def * 0.5);
+    playerDmg = Math.max(1, Math.floor(totalAtk * 4.5 + Math.random() * 18));
+    enemy.def = savedDef;
+  } else if (fn === 'worldEndFist') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 8.0 + Math.random() * 26)); enemy.def = savedDef;
+    stunTurns = 3;
+  } else if (fn === 'sacredPulse') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 5.5 + Math.random() * 20)); enemy.def = savedDef;
+    player.hp = Math.min(player.maxHp, player.hp + Math.floor(player.maxHp * 0.15));
+  } else if (fn === 'celestialPunishment') {
+    enemy.def = 0; playerDmg = Math.max(1, Math.floor(totalAtk * 11.0 + Math.random() * 35)); enemy.def = savedDef;
+    stunTurns = 3;
+
   } else {
     // Generic fallback
     playerDmg = Math.max(1, Math.floor(totalAtk * 2.5 + Math.random() * 15) - Math.floor(enemy.def * 0.5));
